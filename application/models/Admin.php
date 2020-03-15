@@ -11,8 +11,8 @@ class Admin extends Model
 	public function checkAdmin() {
 		// Предполагается, что здесь в будущем будет запрос к БД, поэтому метод реализован в модели
 
-		$login = isset($_POST['login']) ? $_POST['login'] : '';
-		$password = isset($_POST['password']) ? $_POST['password'] : '';
+		$login = isset($_POST['login']) ? htmlspecialchars($_POST['login']) : '';
+		$password = isset($_POST['password']) ? htmlspecialchars($_POST['password']) : '';
 
 		if (empty($login)) {
 			return [
@@ -42,9 +42,9 @@ class Admin extends Model
 	}
 
 	public function updatetask() {
-		$id = isset($_POST['id']) ? $_POST['id'] : '';
+		$id = isset($_POST['id']) ? htmlspecialchars($_POST['id']) : '';
 		$status = (isset($_POST['status']) && $_POST['status'] == 1) ? $_POST['status'] : 0;
-		$description = isset($_POST['description']) ? $_POST['description'] : '';
+		$description = isset($_POST['description']) ? htmlspecialchars($_POST['description']) : '';
 
 		if (empty($id)) {
 			return [

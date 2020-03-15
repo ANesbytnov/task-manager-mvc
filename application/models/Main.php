@@ -46,9 +46,9 @@ class Main extends Model
 	}
 
 	public function newTask() {
-		$username = isset($_POST['username']) ? $_POST['username'] : '';
-		$email = isset($_POST['email']) ? $_POST['email'] : '';
-		$description = isset($_POST['description']) ? $_POST['description'] : '';
+		$username = isset($_POST['username']) ? htmlspecialchars($_POST['username']) : '';
+		$email = isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '';
+		$description = isset($_POST['description']) ? htmlspecialchars($_POST['description']) : '';
 
 		if (empty($username)) {
 			return [
