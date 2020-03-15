@@ -1,0 +1,11 @@
+.sort {
+	cursor: pointer;
+}
+
+.sort[data-sort-type="asc"]:after {
+	content: ' ↑';
+}
+
+.sort[data-sort-type="desc"]:after {
+	content: ' ↓';
+}
