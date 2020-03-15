@@ -41,6 +41,10 @@
                 <span>Вы вошли как admin.</span> <a href="/admin/logout">Выйти</a>
             </div>
         </div><?
+    } else { ?>
+        <div class="row">
+            <a href="/admin/login">Авторизация</a>
+        </div><?
     }
 
     if (isset($title) && !empty($title)) { ?>
