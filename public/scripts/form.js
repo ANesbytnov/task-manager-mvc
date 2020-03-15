@@ -46,7 +46,7 @@ $(document).ready(function() {
 	$('.task-apply').click(function() {
 		$tr = $(this).closest('tr');
 		var status = $tr.find('.task-done:checked');
-		status = status.length > 0 ? 1 : 0;
+		status = status.length > 0 ? 1 : -1;
 
 		var mydata = {
 			"description" : $tr.find('.task-description').val(),

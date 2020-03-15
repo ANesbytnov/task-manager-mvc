@@ -43,7 +43,7 @@ class Admin extends Model
 
 	public function updatetask() {
 		$id = isset($_POST['id']) ? htmlspecialchars($_POST['id']) : '';
-		$status = (isset($_POST['status']) && $_POST['status'] == 1) ? $_POST['status'] : 0;
+		$status = (isset($_POST['status']) && in_array($_POST['status'], ["0", "1"])) ? $_POST['status'] : -1;
 		$description = isset($_POST['description']) ? htmlspecialchars($_POST['description']) : '';
 
 		if (empty($id)) {
@@ -60,14 +60,24 @@ class Admin extends Model
 			];
 		}
 
-		$query = $this->db->query('
-				UPDATE 	tasks
-				SET 	description = :description
-					,	status = :status
-				WHERE 	id = :id
-			', 
-			compact("description", "status", "id")
-		);
+		if ($status !== -1) {
+			$query = $this->db->query('
+					UPDATE 	tasks
+					SET 	description = :description
+						,	status = :status
+					WHERE 	id = :id
+				', 
+				compact("description", "status", "id")
+			);			
+		} else {
+			$query = $this->db->query('
+					UPDATE 	tasks
+					SET 	description = :description
+					WHERE 	id = :id
+				', 
+				compact("description", "id")
+			);
+		}
 
 		if ($query['result']) {
 			$_SESSION['notice'] = "Задача успешно обновлена";

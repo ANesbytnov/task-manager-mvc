@@ -27,7 +27,7 @@ class MainController extends Controller
 		$pages = $this->model->getCountPages();
 
 		if ($page > $pages || $page < 1) {
-			View::errorCode(404);
+			View::errorCode(404, 'Ошибка пагинации');
 		}
 
 		$vars = [

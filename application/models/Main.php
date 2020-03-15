@@ -14,7 +14,14 @@ class Main extends Model
 			SELECT 	COUNT(id) AS count
 			FROM 	tasks'
 		);
-		return (int)ceil($count / self::LIMIT);
+		
+		$result = (int)ceil($count / self::LIMIT);
+		
+		if ($result == 0) {
+			$result = 1;
+		}
+
+		return $result;
 	}
 
 	public function getTasks($page = 1) {
