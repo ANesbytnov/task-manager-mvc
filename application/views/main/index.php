@@ -65,9 +65,9 @@
                     <thead>
                         <tr><?
                             renderTh('username', 'Имя пользователя');
-                            renderTh('email', 'E-mail');
-                            renderTh('description', 'Текст задачи'); ?>
-                            <th scope="col">Статус</th><?
+                            renderTh('email', 'E-mail'); ?>
+                            <th scope="col">Текст задачи</th><?
+                            renderTh('task_status', 'Статус'); 
                             
                             if (isAdmin()) { ?>
                                 <th scope="col">Действие</th><?
