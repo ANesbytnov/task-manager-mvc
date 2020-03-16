@@ -45,7 +45,8 @@ class Main extends Model
 					,	username
 					, 	email
 					,	description
-					, 	status
+					, 	task_status
+					,	admin_status
 			FROM 		tasks
 			ORDER BY 	' . $sortField . ' ' . $sortType . ' 
 			LIMIT 		' . $offset . ', ' . self::LIMIT

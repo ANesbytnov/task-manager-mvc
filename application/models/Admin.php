@@ -43,7 +43,7 @@ class Admin extends Model
 
 	public function updatetask() {
 		$id = isset($_POST['id']) ? htmlspecialchars($_POST['id']) : '';
-		$status = (isset($_POST['status']) && in_array($_POST['status'], ["0", "1"])) ? $_POST['status'] : -1;
+		$task_status = (isset($_POST['status']) && in_array($_POST['status'], ["0", "1"])) ? $_POST['status'] : -1;
 		$description = isset($_POST['description']) ? htmlspecialchars($_POST['description']) : '';
 
 		if (empty($id)) {
@@ -60,19 +60,37 @@ class Admin extends Model
 			];
 		}
 
-		if ($status !== -1) {
+		// Возможно admin_status = 0 И изменился текст задачи, тогда нужно сделать admin_status = 1
+		$old = $this->db->row('
+				SELECT 	description
+					,	admin_status
+				FROM	tasks
+				WHERE 	id = :id
+			', 
+			compact("id")
+		);
+
+		if (is_array($old) && count($old) > 0 && ($old[0]['admin_status'] == 0) && ($old[0]['description'] != $description)) {
+			$admin_status = 1;
+		} else {
+			$admin_status = 0;
+		}
+
+		if ($task_status !== -1) {
 			$query = $this->db->query('
 					UPDATE 	tasks
 					SET 	description = :description
-						,	status = :status
+						,	task_status = :task_status ' .
+						($admin_status == 1 ? ',	admin_status = 1 ' : '') . '
 					WHERE 	id = :id
 				', 
-				compact("description", "status", "id")
-			);			
+				compact("description", "task_status", "id")
+			);
 		} else {
 			$query = $this->db->query('
 					UPDATE 	tasks
-					SET 	description = :description
+					SET 	description = :description ' .
+						($admin_status == 1 ? ',	admin_status = 1 ' : '') . '
 					WHERE 	id = :id
 				', 
 				compact("description", "id")

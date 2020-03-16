@@ -1,5 +1,10 @@
 <?
     define('TASK_DONE', 1);
+    define('TASK_DONE_TITLE', 'выполнено');
+    define('ADMIN_EDITED', 1);
+    define('ADMIN_EDITED_TITLE', 'отредактировано администратором');
+
+
     define('ADMIN', 'admin');
 
     function isAdmin() {
@@ -82,20 +87,25 @@
                                     } ?>
                                 </td>
                                 <td><?
-                                    if (isset($task['status'])) {
-                                        if ($task['status'] == TASK_DONE) {
-                                            echo 'Выполнена';
+                                    if (isset($task['task_status'])) {
+                                        if ($task['task_status'] == TASK_DONE) {
+                                            echo TASK_DONE_TITLE;
                                         } else {
-                                            echo 'В работе';
-        
+
                                             if (isAdmin()) { ?>
                                                 <div class="form-check">
                                                     <label class="form-check-label">
                                                         <input class="form-check-input task-done" type="checkbox" value="1">
-                                                        Выполнена
+                                                        <?= TASK_DONE_TITLE ?>
                                                     </label>
                                                 </div><?
                                             }                              
+                                        }
+                                    } 
+
+                                    if (isset($task['admin_status'])) {
+                                        if ($task['admin_status'] == ADMIN_EDITED) {
+                                            echo '<br>' . ADMIN_EDITED_TITLE;
                                         }
                                     } ?>
                                 </td><?
